@@ -1,0 +1,6 @@
+{
+  "name": "LIX - Layanan Tukang & Mitra Konstruksi",
+  "description": "Aplikasi pemesanan jasa tukang, arsitek, konsultan struktur, dan mandor bergaransi bebas ghosting binaan BLK & BNSP dengan perlindungan rekening bersama escrow.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
