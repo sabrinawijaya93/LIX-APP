@@ -111,6 +111,7 @@ export const OrdersTab: React.FC<OrdersTabProps> = ({
                 {/* Mitra info */}
                 <div className="flex items-start gap-3">
                   <img
+                    referrerPolicy="no-referrer"
                     src={order.mitraAvatar}
                     alt={order.mitraName}
                     className="w-14 h-14 rounded-2xl object-cover ring-1 ring-orange-200 flex-shrink-0"

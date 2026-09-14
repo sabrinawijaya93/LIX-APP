@@ -21,7 +21,14 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isFavorite, setIsFavorite] = useState(false);
   const [reviewFilter, setReviewFilter] = useState<'all' | 'photo' | 'five'>('all');
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewModal, setPreviewModal] = useState<{
+    url: string;
+    title: string;
+    subtitle?: string;
+    project?: (typeof mitra.portfolioProjects)[0];
+  } | null>(null);
+  const [activeImages, setActiveImages] = useState<Record<string, string>>({});
+  const [fitModes, setFitModes] = useState<Record<string, 'cover' | 'contain'>>({});
 
   const allMitraIds: MitraId[] = ['joko', 'dwi', 'yanto', 'hendra'];
 
@@ -120,6 +127,7 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
                 }`}
               >
                 <img
+                  referrerPolicy="no-referrer"
                   src={m.avatar}
                   alt={m.name}
                   className="w-4 h-4 rounded-full object-cover"
@@ -147,6 +155,7 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
           <div className="flex items-start gap-3.5">
             <div className="relative flex-shrink-0">
               <img
+                referrerPolicy="no-referrer"
                 src={mitra.avatar}
                 alt={mitra.name}
                 className="w-20 h-20 rounded-2xl object-cover ring-2 ring-orange-200 shadow-sm"
@@ -282,115 +291,209 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
           </div>
 
           {/* Portfolio Projects Cards */}
-          <div className="flex flex-col gap-3">
-            {filteredProjects.map(project => (
-              <div
-                key={project.id}
-                className="bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-2xs flex flex-col"
-              >
-                {/* Image Container with Badges */}
+          <div className="flex flex-col gap-3.5">
+            {filteredProjects.map(project => {
+              const activeImg = activeImages[project.id] || project.mainImage;
+              const isContain = fitModes[project.id] === 'contain';
+
+              return (
                 <div
-                  className="relative w-full h-44 bg-gray-100 cursor-pointer group"
-                  onClick={() => setPreviewImage(project.mainImage)}
+                  key={project.id}
+                  className="bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-2xs flex flex-col"
                 >
-                  <img
-                    src={project.mainImage}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
+                  {/* Image Container with Badges */}
+                  <div
+                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] min-h-[220px] max-h-[280px] bg-slate-900 cursor-pointer group overflow-hidden select-none"
+                    onClick={() => {
+                      setPreviewModal({
+                        url: activeImg,
+                        title: project.title,
+                        subtitle: `${project.categoryLabel} • ${project.location}`,
+                        project: project
+                      });
+                    }}
+                  >
+                    <img
+                      referrerPolicy="no-referrer"
+                      src={activeImg}
+                      alt={project.title}
+                      className={`w-full h-full transition-transform duration-300 ${
+                        isContain
+                          ? 'object-contain p-2'
+                          : 'object-cover object-center group-hover:scale-103'
+                      }`}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        const fallback = project.fallbackImage || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop';
+                        if (target.src !== fallback) {
+                          target.src = fallback;
+                        }
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/35 pointer-events-none"></div>
 
-                  <span className="absolute top-2.5 left-2.5 px-2.5 py-1 bg-[#ff6200] text-white text-[10px] font-bold rounded-lg shadow-sm">
-                    {project.categoryLabel}
-                  </span>
+                    {/* Top Bar on Image */}
+                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                      <span className="px-2.5 py-1 bg-[#ff6200] text-white text-[10px] font-bold rounded-lg shadow-sm">
+                        {project.categoryLabel}
+                      </span>
 
-                  <span className="absolute top-2.5 right-2.5 px-2 py-0.5 bg-black/60 backdrop-blur-xs text-white text-[10px] font-medium rounded-lg flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[13px]">zoom_in</span>
-                    <span>Lihat Foto</span>
-                  </span>
+                      <div className="flex items-center gap-1.5 pointer-events-auto">
+                        {/* Toggle Foto Utuh / Penuh */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFitModes(prev => ({
+                              ...prev,
+                              [project.id]: prev[project.id] === 'contain' ? 'cover' : 'contain'
+                            }));
+                          }}
+                          className="px-2.5 py-1 bg-black/65 hover:bg-black/85 backdrop-blur-xs text-white text-[10px] font-medium rounded-lg flex items-center gap-1 transition-colors border border-white/20"
+                          title="Ganti mode gambar antara Penuh (Cover) dan Foto Utuh (Contain)"
+                        >
+                          <span className="material-symbols-outlined text-[13px]">
+                            {isContain ? 'crop_free' : 'aspect_ratio'}
+                          </span>
+                          <span>{isContain ? 'Mode Zoom' : 'Foto Utuh'}</span>
+                        </button>
 
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-xs">
-                    <span className="font-semibold truncate drop-shadow-md">
-                      {project.location}
-                    </span>
-                    <span className="text-[11px] font-mono bg-white/20 backdrop-blur-xs px-2 py-0.5 rounded text-white flex-shrink-0">
-                      {project.tagBottomRight}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Project Details */}
-                <div className="p-4 flex flex-col gap-2.5">
-                  <h4 className="text-sm font-bold text-gray-900 leading-snug">
-                    {project.title}
-                  </h4>
-
-                  {/* Metrics bar */}
-                  <div className="grid grid-cols-3 gap-2 bg-gray-50 rounded-xl p-2.5 text-center">
-                    <div>
-                      <span className="text-[10px] text-gray-500 block">Nilai/Biaya</span>
-                      <span className="text-xs font-bold text-gray-900">{project.costEstimate}</span>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPreviewModal({
+                              url: activeImg,
+                              title: project.title,
+                              subtitle: `${project.categoryLabel} • ${project.location}`,
+                              project: project
+                            });
+                          }}
+                          className="px-2.5 py-1 bg-black/65 hover:bg-black/85 backdrop-blur-xs text-white text-[10px] font-medium rounded-lg flex items-center gap-1 border border-white/20 transition-colors"
+                        >
+                          <span className="material-symbols-outlined text-[13px]">zoom_in</span>
+                          <span>Perbesar</span>
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-[10px] text-gray-500 block">Durasi Kerja</span>
-                      <span className="text-xs font-bold text-gray-900">{project.duration}</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-gray-500 block">{project.precisionLabel}</span>
-                      <span className="text-xs font-bold text-[#ff6200]">
-                        {project.precisionValue}
+
+                    {/* Bottom Info on Image */}
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-xs pointer-events-none">
+                      <span className="font-semibold truncate drop-shadow-md max-w-[65%]">
+                        {project.location}
+                      </span>
+                      <span className="text-[10px] font-mono bg-black/40 backdrop-blur-xs border border-white/20 px-2 py-0.5 rounded text-white flex-shrink-0">
+                        {project.tagBottomRight}
                       </span>
                     </div>
                   </div>
 
-                  {/* Specs List */}
-                  <div className="space-y-1 text-xs text-gray-600">
-                    {project.specs.map((spec, i) => (
-                      <div key={i} className="flex items-start gap-1.5">
-                        <span className="material-symbols-outlined text-[#ff6200] text-[15px] flex-shrink-0 mt-0.5">
-                          check_circle
+                  {/* Project Details */}
+                  <div className="p-4 flex flex-col gap-3">
+                    <div>
+                      <h4 className="text-sm font-bold text-gray-900 leading-snug">
+                        {project.title}
+                      </h4>
+                      {project.statusTag && (
+                        <span className="inline-flex items-center gap-1 text-[10px] text-emerald-600 font-bold mt-1">
+                          <span className="material-symbols-outlined text-[13px]">verified</span>
+                          <span>Proyek Disetujui Escrow ({project.statusTag})</span>
                         </span>
-                        <span>{spec}</span>
-                      </div>
-                    ))}
-                  </div>
+                      )}
+                    </div>
 
-                  {/* Gallery thumbnails if available */}
-                  {project.galleryPreviews && project.galleryPreviews.length > 0 && (
-                    <div className="flex items-center gap-2 pt-1">
-                      {project.galleryPreviews.map((gal, gIdx) => (
-                        <div
-                          key={gIdx}
-                          onClick={() => setPreviewImage(gal.image)}
-                          className="flex-1 h-14 rounded-lg overflow-hidden border border-gray-200 relative cursor-pointer group"
-                        >
-                          <img
-                            src={gal.image}
-                            alt={gal.label}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                          />
-                          <span className="absolute inset-x-0 bottom-0 bg-black/60 text-white text-[9px] text-center py-0.5 font-medium">
-                            {gal.label}
+                    {/* Metrics bar */}
+                    <div className="grid grid-cols-3 gap-2 bg-gray-50 rounded-xl p-2.5 text-center">
+                      <div>
+                        <span className="text-[10px] text-gray-500 block">Nilai/Biaya</span>
+                        <span className="text-xs font-bold text-gray-900">{project.costEstimate}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-gray-500 block">Durasi Kerja</span>
+                        <span className="text-xs font-bold text-gray-900">{project.duration}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-gray-500 block">{project.precisionLabel}</span>
+                        <span className="text-xs font-bold text-[#ff6200]">
+                          {project.precisionValue}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Specs List */}
+                    <div className="space-y-1 text-xs text-gray-600">
+                      {project.specs.map((spec, i) => (
+                        <div key={i} className="flex items-start gap-1.5">
+                          <span className="material-symbols-outlined text-[#ff6200] text-[15px] flex-shrink-0 mt-0.5">
+                            check_circle
                           </span>
+                          <span>{spec}</span>
                         </div>
                       ))}
                     </div>
-                  )}
 
-                  {/* Client Quote */}
-                  {project.clientQuote && (
-                    <div className="p-3 bg-orange-50/50 rounded-xl border border-orange-100 text-xs">
-                      <p className="italic text-gray-700 leading-relaxed">{project.clientQuote}</p>
-                      {project.clientAuthor && (
-                        <p className="text-[11px] font-bold text-[#541b00] mt-1 text-right">
-                          — {project.clientAuthor}
-                        </p>
-                      )}
-                    </div>
-                  )}
+                    {/* Gallery previews - Interactive Thumbnail Selector */}
+                    {project.galleryPreviews && project.galleryPreviews.length > 0 && (
+                      <div className="flex flex-col gap-1.5 pt-1 border-t border-gray-100">
+                        <div className="flex items-center justify-between text-[11px] text-gray-500">
+                          <span className="font-semibold text-gray-700">Galeri Foto ({project.galleryPreviews.length} Sudut):</span>
+                          <span className="text-[10px] text-[#ff6200] font-medium">Klik untuk mengganti tampilan</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {project.galleryPreviews.map((gal, gIdx) => {
+                            const isSelected = activeImg === gal.image;
+                            return (
+                              <button
+                                key={gIdx}
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setActiveImages(prev => ({ ...prev, [project.id]: gal.image }));
+                                }}
+                                className={`flex-1 h-14 rounded-lg overflow-hidden border relative cursor-pointer group transition-all text-left ${
+                                  isSelected
+                                    ? 'ring-2 ring-[#ff6200] border-transparent shadow-xs scale-102'
+                                    : 'border-gray-200 hover:border-gray-300 opacity-80 hover:opacity-100'
+                                }`}
+                              >
+                                <img
+                                  referrerPolicy="no-referrer"
+                                  src={gal.image}
+                                  alt={gal.label}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                  onError={(e) => {
+                                    const target = e.currentTarget;
+                                    const fb = project.fallbackImage || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop';
+                                    if (target.src !== fb) target.src = fb;
+                                  }}
+                                />
+                                <span className={`absolute inset-x-0 bottom-0 text-[9px] text-center py-0.5 font-bold truncate px-1 transition-colors ${
+                                  isSelected ? 'bg-[#ff6200] text-white' : 'bg-black/65 text-white'
+                                }`}>
+                                  {gal.label}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Client Quote */}
+                    {project.clientQuote && (
+                      <div className="p-3 bg-orange-50/50 rounded-xl border border-orange-100 text-xs">
+                        <p className="italic text-gray-700 leading-relaxed">{project.clientQuote}</p>
+                        {project.clientAuthor && (
+                          <p className="text-[11px] font-bold text-[#541b00] mt-1 text-right">
+                            — {project.clientAuthor}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -516,13 +619,22 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
                     {rev.photos.map((ph, pIdx) => (
                       <div
                         key={pIdx}
-                        onClick={() => setPreviewImage(ph.image)}
+                        onClick={() => setPreviewModal({
+                          url: ph.image,
+                          title: rev.projectTitle,
+                          subtitle: `Hasil Pekerjaan • ${ph.label}`
+                        })}
                         className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:opacity-90 transition-opacity"
                       >
                         <img
+                          referrerPolicy="no-referrer"
                           src={ph.image}
                           alt={ph.label}
                           className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=600&fit=crop';
+                          }}
                         />
                       </div>
                     ))}
@@ -547,25 +659,144 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
         </div>
       </div>
 
-      {/* Image Preview Lightbox Modal */}
-      {previewImage && (
+      {/* Enhanced Image Preview Lightbox Modal */}
+      {previewModal && (
         <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
-          onClick={() => setPreviewImage(null)}
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-6 select-none"
+          onClick={() => setPreviewModal(null)}
         >
-          <div className="relative max-w-sm w-full">
-            <img
-              src={previewImage}
-              alt="Preview"
-              className="w-full h-auto rounded-2xl shadow-2xl object-contain max-h-[80vh]"
-            />
+          {/* Top Bar */}
+          <div
+            className="w-full max-w-lg flex items-center justify-between text-white pb-3 pt-1"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col min-w-0 pr-3">
+              <span className="text-[10px] font-bold text-orange-400 uppercase tracking-wider flex items-center gap-1">
+                <span className="material-symbols-outlined text-[13px]">photo_camera</span>
+                <span>Foto Portofolio Utuh (100% Full View)</span>
+              </span>
+              <h3 className="text-sm font-bold text-white truncate mt-0.5">
+                {previewModal.title}
+              </h3>
+              {previewModal.subtitle && (
+                <p className="text-[11px] text-gray-400 truncate">{previewModal.subtitle}</p>
+              )}
+            </div>
+
             <button
-              onClick={() => setPreviewImage(null)}
-              className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black"
+              type="button"
+              onClick={() => setPreviewModal(null)}
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
+              aria-label="Tutup"
             >
-              <span className="material-symbols-outlined text-[18px]">close</span>
+              <span className="material-symbols-outlined text-[20px]">close</span>
             </button>
           </div>
+
+          {/* Main Photo View Area */}
+          <div
+            className="relative flex-1 w-full max-w-lg flex items-center justify-center my-auto px-1"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              referrerPolicy="no-referrer"
+              src={previewModal.url}
+              alt={previewModal.title}
+              className="w-auto h-auto max-w-full max-h-[66vh] rounded-2xl shadow-2xl object-contain border border-white/15"
+              onError={(e) => {
+                const target = e.currentTarget;
+                const fb = previewModal.project?.fallbackImage || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop';
+                if (target.src !== fb) {
+                  target.src = fb;
+                }
+              }}
+            />
+          </div>
+
+          {/* Bottom Thumbnails Carousel if Project has multiple gallery previews */}
+          {previewModal.project?.galleryPreviews && previewModal.project.galleryPreviews.length > 0 && (
+            <div
+              className="w-full max-w-lg pt-3 flex flex-col items-center gap-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-1 scrollbar-none px-1">
+                {/* Main image thumbnail */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPreviewModal(prev => prev ? ({
+                      ...prev,
+                      url: previewModal.project!.mainImage,
+                      subtitle: `${previewModal.project!.categoryLabel} • Foto Utama`
+                    }) : null);
+                    setActiveImages(prev => ({ ...prev, [previewModal.project!.id]: previewModal.project!.mainImage }));
+                  }}
+                  className={`h-14 w-20 rounded-lg overflow-hidden border relative flex-shrink-0 cursor-pointer transition-all ${
+                    previewModal.url === previewModal.project.mainImage
+                      ? 'ring-2 ring-[#ff6200] border-transparent scale-105'
+                      : 'border-white/20 opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <img
+                    referrerPolicy="no-referrer"
+                    src={previewModal.project.mainImage}
+                    alt="Utama"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (previewModal.project?.fallbackImage) target.src = previewModal.project.fallbackImage;
+                    }}
+                  />
+                  <span className="absolute inset-x-0 bottom-0 bg-black/70 text-[8px] text-white text-center py-0.5">
+                    Utama
+                  </span>
+                </button>
+
+                {/* Gallery previews */}
+                {previewModal.project.galleryPreviews.map((g, idx) => {
+                  const isSelected = previewModal.url === g.image;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setPreviewModal(prev => prev ? ({
+                          ...prev,
+                          url: g.image,
+                          subtitle: `${previewModal.project!.title} • ${g.label}`
+                        }) : null);
+                        setActiveImages(prev => ({ ...prev, [previewModal.project!.id]: g.image }));
+                      }}
+                      className={`h-14 w-20 rounded-lg overflow-hidden border relative flex-shrink-0 cursor-pointer transition-all ${
+                        isSelected
+                          ? 'ring-2 ring-[#ff6200] border-transparent scale-105'
+                          : 'border-white/20 opacity-60 hover:opacity-100'
+                      }`}
+                    >
+                      <img
+                        referrerPolicy="no-referrer"
+                        src={g.image}
+                        alt={g.label}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (previewModal.project?.fallbackImage) target.src = previewModal.project.fallbackImage;
+                        }}
+                      />
+                      <span className={`absolute inset-x-0 bottom-0 text-[8px] text-center py-0.5 font-bold ${
+                        isSelected ? 'bg-[#ff6200] text-white' : 'bg-black/70 text-white'
+                      }`}>
+                        {g.label}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <span className="text-[10px] text-gray-400">
+                Pilih foto untuk beralih tampilan • Klik di luar untuk menutup
+              </span>
+            </div>
+          )}
         </div>
       )}
 

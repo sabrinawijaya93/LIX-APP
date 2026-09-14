@@ -34,6 +34,7 @@ export const FavoritesTab: React.FC<FavoritesTabProps> = ({ onSelectMitra, onExp
             >
               <div className="flex items-start gap-3">
                 <img
+                  referrerPolicy="no-referrer"
                   src={mitra.avatar}
                   alt={mitra.name}
                   className="w-14 h-14 rounded-2xl object-cover ring-1 ring-orange-200"

@@ -107,6 +107,7 @@ export const ChatTab: React.FC<ChatTabProps> = ({
         <div className="flex items-center gap-2.5">
           <div className="relative">
             <img
+              referrerPolicy="no-referrer"
               src={activeMitra.avatar}
               alt={activeMitra.name}
               className="w-10 h-10 rounded-full object-cover ring-1 ring-orange-200"
@@ -148,7 +149,12 @@ export const ChatTab: React.FC<ChatTabProps> = ({
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium'
               }`}
             >
-              <img src={m.avatar} alt={m.name} className="w-4 h-4 rounded-full object-cover" />
+              <img
+                referrerPolicy="no-referrer"
+                src={m.avatar}
+                alt={m.name}
+                className="w-4 h-4 rounded-full object-cover"
+              />
               <span>{m.name.split(',')[0]}</span>
             </button>
           );

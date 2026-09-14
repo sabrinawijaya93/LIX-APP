@@ -414,6 +414,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <div className="flex items-start gap-3">
                   <div className="relative flex-shrink-0">
                     <img
+                      referrerPolicy="no-referrer"
                       src={mitra.avatar}
                       alt={mitra.name}
                       className="w-16 h-16 rounded-2xl object-cover ring-1 ring-orange-200"

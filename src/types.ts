@@ -32,6 +32,7 @@ export interface PortfolioProject {
   precisionLabel: string;
   precisionValue: string;
   mainImage: string;
+  fallbackImage?: string;
   specs: string[];
   galleryPreviews?: { label: string; image: string }[];
   clientQuote?: string;

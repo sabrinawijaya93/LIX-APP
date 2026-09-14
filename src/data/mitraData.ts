@@ -97,6 +97,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
         precisionLabel: 'Izin PBG / SKA',
         precisionValue: 'Disetujui 100%',
         mainImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSBzFpWDWrDMRihQO7ViT_Gbdvw4BqTFuBfO24OnMpD7theV28wnKBk0Qf9XfVvA7DjdcOLsqSPqNNe_hdtbwLHTpXZMdItck4ZDj3H4-cj3tNOygyDb8DfBdp5FbddwfXbZHIupuxA46gRzluGtig2dxitBnOMUdWCOxzAvsVowTIJZ3vVKxHJ6SnBAYpXmqgB_orHjchJAVQ5bzarHaFyot8f7kStNnJTh-8asH1fKWJjxd__6I',
+        fallbackImage: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&auto=format&fit=crop',
         specs: [
           'Gambar Kerja Detail (DED Arsitektur, MEP, Sanitasi Standar BLK)',
           'Render Fasad 3D Photoreal 4K Exterior & Courtyard Cahaya Alami',
@@ -104,8 +105,8 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
         ],
         galleryPreviews: [
           { label: 'Fasad 4K', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSBzFpWDWrDMRihQO7ViT_Gbdvw4BqTFuBfO24OnMpD7theV28wnKBk0Qf9XfVvA7DjdcOLsqSPqNNe_hdtbwLHTpXZMdItck4ZDj3H4-cj3tNOygyDb8DfBdp5FbddwfXbZHIupuxA46gRzluGtig2dxitBnOMUdWCOxzAvsVowTIJZ3vVKxHJ6SnBAYpXmqgB_orHjchJAVQ5bzarHaFyot8f7kStNnJTh-8asH1fKWJjxd__6I' },
-          { label: 'Courtyard', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=350&fit=crop' },
-          { label: 'DED / PBG', image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=350&fit=crop' }
+          { label: 'Courtyard', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop' },
+          { label: 'DED / PBG', image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&auto=format&fit=crop' }
         ],
         clientQuote: '"Gambar kerja Pak Dwi sangat detail dan disetujui PTSP tanpa revisi berulang. Desain sirkulasi udaranya membuat rumah tetap sejuk tanpa AC berlebih!"',
         clientAuthor: 'Bpk. Hendra S. (Pemilik Rumah)',
@@ -124,10 +125,16 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
         precisionLabel: 'Efisiensi Material ACP',
         precisionValue: 'Hemat 18% RAB',
         mainImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC4HKuqC6slPkfFtBxRwzVpy9YL_Fg0IciENmwrY1KxDFXQdgmdvWjsYdcIYloYnFT1mTZLVY8MwVBLvPqgaHspA-wPtrGP-ybYFY6m5Mx-ktpFHVP-eKVw_FU7g7K2k5IrrBrVCMxJR70S9RfUlK9KfEbezE_5NLyZ6sAbfQ8CbJzqOO8rmK6NoAXUZXkXsPI1Cp4WOXKWcMnpQPlS6Nxo50rSU3xFD3jTDTU18py9810gCEKm0wY',
+        fallbackImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop',
         specs: [
           'Re-layout Ruang Usaha Efisien & Aksesibilitas Publik Ramah Kursi Roda',
           'Pengajuan Berkas IMB / PBG Perubahan Fungsional Resmi DKI Jakarta',
           'Supervisi Pemilihan Material ACP, Louver Kayu & Curtain Wall Hemat Energi'
+        ],
+        galleryPreviews: [
+          { label: 'Fasad Penuh 3 Lt', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC4HKuqC6slPkfFtBxRwzVpy9YL_Fg0IciENmwrY1KxDFXQdgmdvWjsYdcIYloYnFT1mTZLVY8MwVBLvPqgaHspA-wPtrGP-ybYFY6m5Mx-ktpFHVP-eKVw_FU7g7K2k5IrrBrVCMxJR70S9RfUlK9KfEbezE_5NLyZ6sAbfQ8CbJzqOO8rmK6NoAXUZXkXsPI1Cp4WOXKWcMnpQPlS6Nxo50rSU3xFD3jTDTU18py9810gCEKm0wY' },
+          { label: 'Perspektif Sudut', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop' },
+          { label: 'Detail Kisi & ACP', image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?w=800&auto=format&fit=crop' }
         ],
         tagBottomRight: 'Ruko 3 Lantai · LB 240m²',
         statusTag: 'Selesai 100%'
