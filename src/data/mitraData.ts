@@ -1,7 +1,12 @@
 import { MitraData, BankOption, MitraId } from '../types';
 
 export const LIX_LOGO = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCldHZgPzqODh0te_U0SrGYZ3k5H3xe160m6UR29nMt2E2ERXUZYhne4OnIe8ZpNrySy40jPS7XbNaZ6cwsnOFnSOKTGkLCAsYwcwEhcZzRoXXtmCv4szuF5I6J23YCnuujcHih968QXCIIjo4r7J8jp9OEYKz15AfLzpmaeH2ZhuAhLmdeOeWu6UnWwnF7ZOkDW5SDycT61Cv03HUslEhU5w5bR_Tq4BRxnucPqqt4aiUzNl-QcSowFlL5W7tGf4Mu';
-export const LIX_LOGO_HELMET = 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjqSKx6bcXRMaIfgEhdE5DLpCbN24vVHtAPHYOvjfPIp6SWAbYz79ZPsfvXNH99Op9QWR9vaec2OWS7ppVcpZRvXyFMlE_GfhHUALtQENitiiOYkzsXB2HJqS82jUXly29wv3ldxmWhdW2ZM0GsRdxQO4FbodITrckemLR8QGaBNfR0PeHEM7tUjZ050mpvrzrTb1XErcSciYeV_aD-NQjoO0CTz5coJKBPb4ELDBuKaFFZXIGy7vCyYON5tOuo598';
+export const LIX_LOGO_HELMET = '/assets/cover-lix.png';
+export const COVER_LIX_LOGO = '/assets/cover-lix.png';
+export const DWI_PRABOWO_IMG = '/assets/dwi-prabowo.jpg';
+export const JOKO_SANTOSO_IMG = '/assets/joko-santoso.jpg';
+export const VILLA_FASAD_4K_IMG = '/assets/img1.jpg';
+export const RUKO_FASAD_IMG = '/assets/img2.jpg';
 export const MAP_PREVIEW_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDG8uoxWn9bgOwOY1E_2rnWeA0Me9lSyOlJCYQCFtKtv7RmBxYFjLu4RDTeZZ_-PinAchMhqNUV_d00swzRP4g-fCVx18bEWzVnwLrAinoaDQqKLCcgs0Y9isyG2hRwG5k1F4DwA5CWgn4FnNwVBChsq-F5rkJA6FyLQ-d2L-VsXTk1M3fSJFXbfLkcu5fSVh9Gsjff59yN-4Jdi-YfF54v3VjuKggQhBNjgu_EcfPxbEuiqJSLG64';
 
 export const BANK_OPTIONS: BankOption[] = [
@@ -47,7 +52,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
     fullRole: 'Arsitek Utama & Perencana Bangunan (Mitra Binaan BLK)',
     roleCategory: 'Arsitektur',
     binaanText: 'Mitra Binaan BLK',
-    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBvKwc9Bf-hnI4faD7fAfakZgqBpNJWveMXPG8dIJHQDyWDFjz_-30ULDZQNc3eH23OUvFwaTUTXVDerBJfm5vI2Pe3PmSS9m9owBpuBe0dSZgGFEGheVve1-BMK5fjniQV8GXEq5zBGQkydAEsw_zhQlStxiZvJ4XiX-aqH9HgWGE3-7yNtY-lxvydQP_LEBvwU4O60gGvyr5pocuGVA3eJT3nQMBs76gB4CfwgMRfYt0i9c4G4tU',
+    avatar: DWI_PRABOWO_IMG,
     badgeTopText: '✓ Mitra Tersertifikasi Resmi BLK & BNSP',
     rating: 4.98,
     reviewCount: 114,
@@ -96,7 +101,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
         duration: '45 Hari Kerja',
         precisionLabel: 'Izin PBG / SKA',
         precisionValue: 'Disetujui 100%',
-        mainImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSBzFpWDWrDMRihQO7ViT_Gbdvw4BqTFuBfO24OnMpD7theV28wnKBk0Qf9XfVvA7DjdcOLsqSPqNNe_hdtbwLHTpXZMdItck4ZDj3H4-cj3tNOygyDb8DfBdp5FbddwfXbZHIupuxA46gRzluGtig2dxitBnOMUdWCOxzAvsVowTIJZ3vVKxHJ6SnBAYpXmqgB_orHjchJAVQ5bzarHaFyot8f7kStNnJTh-8asH1fKWJjxd__6I',
+        mainImage: VILLA_FASAD_4K_IMG,
         fallbackImage: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&auto=format&fit=crop',
         specs: [
           'Gambar Kerja Detail (DED Arsitektur, MEP, Sanitasi Standar BLK)',
@@ -104,7 +109,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
           'Perhitungan Struktur Pondasi & Beton Bertulang Tahan Gempa'
         ],
         galleryPreviews: [
-          { label: 'Fasad 4K', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSBzFpWDWrDMRihQO7ViT_Gbdvw4BqTFuBfO24OnMpD7theV28wnKBk0Qf9XfVvA7DjdcOLsqSPqNNe_hdtbwLHTpXZMdItck4ZDj3H4-cj3tNOygyDb8DfBdp5FbddwfXbZHIupuxA46gRzluGtig2dxitBnOMUdWCOxzAvsVowTIJZ3vVKxHJ6SnBAYpXmqgB_orHjchJAVQ5bzarHaFyot8f7kStNnJTh-8asH1fKWJjxd__6I' },
+          { label: 'Fasad 4K', image: VILLA_FASAD_4K_IMG },
           { label: 'Courtyard', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop' },
           { label: 'DED / PBG', image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&auto=format&fit=crop' }
         ],
@@ -124,7 +129,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
         duration: '25 Hari Kerja',
         precisionLabel: 'Efisiensi Material ACP',
         precisionValue: 'Hemat 18% RAB',
-        mainImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC4HKuqC6slPkfFtBxRwzVpy9YL_Fg0IciENmwrY1KxDFXQdgmdvWjsYdcIYloYnFT1mTZLVY8MwVBLvPqgaHspA-wPtrGP-ybYFY6m5Mx-ktpFHVP-eKVw_FU7g7K2k5IrrBrVCMxJR70S9RfUlK9KfEbezE_5NLyZ6sAbfQ8CbJzqOO8rmK6NoAXUZXkXsPI1Cp4WOXKWcMnpQPlS6Nxo50rSU3xFD3jTDTU18py9810gCEKm0wY',
+        mainImage: RUKO_FASAD_IMG,
         fallbackImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop',
         specs: [
           'Re-layout Ruang Usaha Efisien & Aksesibilitas Publik Ramah Kursi Roda',
@@ -132,7 +137,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
           'Supervisi Pemilihan Material ACP, Louver Kayu & Curtain Wall Hemat Energi'
         ],
         galleryPreviews: [
-          { label: 'Fasad Penuh 3 Lt', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC4HKuqC6slPkfFtBxRwzVpy9YL_Fg0IciENmwrY1KxDFXQdgmdvWjsYdcIYloYnFT1mTZLVY8MwVBLvPqgaHspA-wPtrGP-ybYFY6m5Mx-ktpFHVP-eKVw_FU7g7K2k5IrrBrVCMxJR70S9RfUlK9KfEbezE_5NLyZ6sAbfQ8CbJzqOO8rmK6NoAXUZXkXsPI1Cp4WOXKWcMnpQPlS6Nxo50rSU3xFD3jTDTU18py9810gCEKm0wY' },
+          { label: 'Fasad Penuh 3 Lt', image: RUKO_FASAD_IMG },
           { label: 'Perspektif Sudut', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop' },
           { label: 'Detail Kisi & ACP', image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?w=800&auto=format&fit=crop' }
         ],
@@ -191,7 +196,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
         escrowTag: 'Lunas via Escrow Garansi LIX (Jaminan 30 Hari)',
         comment: '"Sangat puas dengan Pak Dwi! Pemahaman regulasi PBG DKI cepat sekali beres, dan desain fasad tropisnya sesuai budget RAB. Sertifikasi BLK & IAI beliau benar-benar membuktikan profesionalisme kelas satu. Gambar kerja sangat presisi dan dipuji oleh mandor pelaksana."',
         photos: [
-          { label: 'Hasil Fasad', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSBzFpWDWrDMRihQO7ViT_Gbdvw4BqTFuBfO24OnMpD7theV28wnKBk0Qf9XfVvA7DjdcOLsqSPqNNe_hdtbwLHTpXZMdItck4ZDj3H4-cj3tNOygyDb8DfBdp5FbddwfXbZHIupuxA46gRzluGtig2dxitBnOMUdWCOxzAvsVowTIJZ3vVKxHJ6SnBAYpXmqgB_orHjchJAVQ5bzarHaFyot8f7kStNnJTh-8asH1fKWJjxd__6I' },
+          { label: 'Hasil Fasad', image: VILLA_FASAD_4K_IMG },
           { label: 'Surat PBG', image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=350&fit=crop' }
         ],
         hasPhoto: true,
@@ -211,7 +216,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
         escrowTag: 'Lunas via Escrow Garansi LIX (Jaminan 30 Hari)',
         comment: '"Komunikasi enak, revisi 3D dilayani sabar dan responsif. Berkas izin alih fungsi ruko disetujui tanpa kendala. Garansi 30 hari dari platform LIX juga bikin makin tenang berproyek. Hasil fasad ACP membuat ruko terlihat jauh lebih modern dan ramai pengunjung."',
         photos: [
-          { label: 'Fasad Ruko', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC4HKuqC6slPkfFtBxRwzVpy9YL_Fg0IciENmwrY1KxDFXQdgmdvWjsYdcIYloYnFT1mTZLVY8MwVBLvPqgaHspA-wPtrGP-ybYFY6m5Mx-ktpFHVP-eKVw_FU7g7K2k5IrrBrVCMxJR70S9RfUlK9KfEbezE_5NLyZ6sAbfQ8CbJzqOO8rmK6NoAXUZXkXsPI1Cp4WOXKWcMnpQPlS6Nxo50rSU3xFD3jTDTU18py9810gCEKm0wY' }
+          { label: 'Fasad Ruko', image: RUKO_FASAD_IMG }
         ],
         hasPhoto: true,
         mitraReply: {
@@ -638,7 +643,7 @@ export const MITRA_DATA_MAP: Record<MitraId, MitraData> = {
     fullRole: 'Tukang Ahli Finishing & Pasang Keramik Presisi (Mitra Binaan BLK)',
     roleCategory: 'Tukang Ahli',
     binaanText: 'Mitra Binaan BLK',
-    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVL_yq5UdB34ojTbzDqsFkCj87RVw8iR34WiP1yiJEY6OjMN1kaQR5H3aQQjE03Butlcq5zCHYIWLvcnpKYkMv6gjmogqtMndn3G63pNalaccEYlCqbd0wqhKAK7QTxL0mzrYa0AqyQn5PM5zGpZoVB6JZTeOj6eCe6VqvIsBSdERf_wpx-NYYv3TGmw1C-3tLG30EbuKeTzUcCsIrSJk11svEa-bK0EBRSgksrdhNRcDwRzocyvIQsWHix02QK0Vjbj-qnOUbTQXd',
+    avatar: JOKO_SANTOSO_IMG,
     badgeTopText: '✓ Mitra Tersertifikasi Resmi BLK & BNSP',
     rating: 4.95,
     reviewCount: 168,

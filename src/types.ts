@@ -6,9 +6,19 @@ export type ScreenType =
   | 'mitra_profile'
   | 'booking_confirm'
   | 'payment_method'
-  | 'payment_success';
+  | 'payment_success'
+  | 'project_detail'
+  | 'order_detail';
 
-export type TabType = 'cari' | 'favorit' | 'pesanan' | 'chat' | 'profil';
+export type TabType =
+  | 'beranda'
+  | 'proyek'
+  | 'chat'
+  | 'riwayat'
+  | 'profil'
+  | 'cari'
+  | 'favorit'
+  | 'pesanan';
 
 export interface CertificateItem {
   institution: string;

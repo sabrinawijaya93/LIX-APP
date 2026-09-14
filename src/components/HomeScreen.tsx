@@ -52,7 +52,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   });
 
   return (
-    <div className="w-full max-w-[430px] mx-auto min-h-screen bg-[#f8f9fa] text-[#191c1d] flex flex-col pb-24 relative">
+    <div className="w-full max-w-[430px] mx-auto min-h-screen bg-[#f8f9fa] text-[#191c1d] flex flex-col pb-24 relative overflow-x-hidden">
       {/* Top Header Bar */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md px-4 py-3 border-b border-gray-100 flex items-center justify-between shadow-xs">
         <div className="flex items-center gap-2">
@@ -409,7 +409,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             {filteredMitras.map(mitra => (
               <div
                 key={mitra.id}
-                className="bg-white rounded-2xl p-4 border border-gray-200/80 shadow-2xs hover:shadow-sm transition-all flex flex-col gap-3"
+                className="bg-white rounded-2xl p-3.5 sm:p-4 border border-gray-200/80 shadow-2xs hover:shadow-sm transition-all flex flex-col gap-2.5 sm:gap-3 overflow-hidden"
               >
                 <div className="flex items-start gap-3">
                   <div className="relative flex-shrink-0">
@@ -453,23 +453,23 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-[10px] text-gray-400 font-medium">Mulai Dari</span>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-sm font-extrabold text-[#ff6200]">
-                        Rp {mitra.priceDiscounted.toLocaleString('id-ID')}
-                      </span>
-                      <span className="text-[10px] text-gray-500">/ {mitra.priceUnit}</span>
-                    </div>
+                <div className="pt-2.5 border-t border-gray-100 flex items-center justify-between gap-2">
+                  <div className="flex flex-col shrink min-w-0">
+                    <span className="text-[10px] text-gray-400 font-medium leading-none mb-1">Mulai Dari</span>
+                    <span className="text-sm font-extrabold text-[#ff6200] whitespace-nowrap leading-tight">
+                      Rp {mitra.priceDiscounted.toLocaleString('id-ID')}
+                    </span>
+                    <span className="text-[10.5px] font-semibold text-gray-500 whitespace-nowrap leading-none mt-1">
+                      / {mitra.priceUnit}
+                    </span>
                   </div>
 
                   <button
                     onClick={() => onSelectMitra(mitra.id)}
-                    className="px-3.5 py-2 bg-[#ff6200] hover:bg-[#e05600] active:scale-95 text-white font-bold text-xs rounded-xl shadow-xs flex items-center gap-1 transition-all"
+                    className="px-3 py-2 bg-[#ff6200] hover:bg-[#e05600] active:scale-95 text-white font-bold text-xs rounded-xl shadow-xs flex items-center justify-center gap-1.5 transition-all whitespace-nowrap shrink-0 cursor-pointer"
                   >
-                    <span>Lihat Profil & Portofolio</span>
-                    <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
+                    <span className="whitespace-nowrap">Lihat Profil & Portofolio</span>
+                    <span className="material-symbols-outlined text-[15px] shrink-0">arrow_forward</span>
                   </button>
                 </div>
               </div>
@@ -553,67 +553,75 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       )}
 
       {/* Bottom Navigation Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/95 backdrop-blur-lg border-t border-gray-200/80 px-4 py-2 z-40 flex items-center justify-between shadow-lg">
+      <nav className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/95 backdrop-blur-lg border-t border-gray-200/80 px-2 py-1.5 z-40 flex items-center justify-around shadow-lg">
         <button
-          onClick={() => onChangeTab('cari')}
-          className={`flex flex-col items-center gap-0.5 flex-1 ${
-            activeTab === 'cari' ? 'text-[#ff6200]' : 'text-gray-500 hover:text-gray-800'
+          onClick={() => onChangeTab('beranda')}
+          className={`flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors cursor-pointer ${
+            activeTab === 'beranda' || activeTab === 'cari' ? 'text-[#ff6200] font-bold' : 'text-gray-500 hover:text-gray-800'
           }`}
         >
-          <span className="material-symbols-outlined text-[22px]">search</span>
-          <span className="text-[10px] font-bold">Cari</span>
+          <span className="material-symbols-outlined text-[24px]">home</span>
+          <span className="text-[10px] mt-0.5">Beranda</span>
         </button>
 
         <button
-          onClick={() => onChangeTab('favorit')}
-          className={`flex flex-col items-center gap-0.5 flex-1 ${
-            activeTab === 'favorit' ? 'text-[#ff6200]' : 'text-gray-500 hover:text-gray-800'
-          }`}
-        >
-          <span className="material-symbols-outlined text-[22px]">favorite_border</span>
-          <span className="text-[10px] font-semibold">Favorit</span>
-        </button>
-
-        <button
-          onClick={() => onChangeTab('pesanan')}
-          className={`flex flex-col items-center gap-0.5 flex-1 relative ${
-            activeTab === 'pesanan' ? 'text-[#ff6200]' : 'text-gray-500 hover:text-gray-800'
+          onClick={() => onChangeTab('proyek')}
+          className={`flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors cursor-pointer relative ${
+            activeTab === 'proyek' ? 'text-[#ff6200] font-bold' : 'text-gray-500 hover:text-gray-800'
           }`}
         >
           <div className="relative">
-            <span className="material-symbols-outlined text-[22px]">receipt_long</span>
+            <span
+              className="material-symbols-outlined text-[24px]"
+              style={{ fontVariationSettings: activeTab === 'proyek' ? "'FILL' 1" : "'FILL' 0" }}
+            >
+              engineering
+            </span>
+            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#ff6200] ring-2 ring-white animate-pulse"></span>
+          </div>
+          <span className="text-[10px] mt-0.5">Proyek</span>
+        </button>
+
+        <button
+          onClick={() => onChangeTab('chat')}
+          className={`flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors cursor-pointer relative ${
+            activeTab === 'chat' ? 'text-[#ff6200] font-bold' : 'text-gray-500 hover:text-gray-800'
+          }`}
+        >
+          <div className="relative">
+            <span className="material-symbols-outlined text-[24px]">chat_bubble</span>
+            <span className="absolute -top-1 -right-2 bg-[#ff6200] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+              2
+            </span>
+          </div>
+          <span className="text-[10px] mt-0.5">Chat</span>
+        </button>
+
+        <button
+          onClick={() => onChangeTab('riwayat')}
+          className={`flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors cursor-pointer relative ${
+            activeTab === 'riwayat' || activeTab === 'pesanan' ? 'text-[#ff6200] font-bold' : 'text-gray-500 hover:text-gray-800'
+          }`}
+        >
+          <div className="relative">
+            <span className="material-symbols-outlined text-[24px]">receipt_long</span>
             {ordersCount > 0 && (
               <span className="absolute -top-1 -right-2 bg-[#ff6200] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                 {ordersCount}
               </span>
             )}
           </div>
-          <span className="text-[10px] font-semibold">Pesanan</span>
-        </button>
-
-        <button
-          onClick={() => onChangeTab('chat')}
-          className={`flex flex-col items-center gap-0.5 flex-1 relative ${
-            activeTab === 'chat' ? 'text-[#ff6200]' : 'text-gray-500 hover:text-gray-800'
-          }`}
-        >
-          <div className="relative">
-            <span className="material-symbols-outlined text-[22px]">chat_bubble_outline</span>
-            <span className="absolute -top-1 -right-2 bg-[#ff6200] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-              2
-            </span>
-          </div>
-          <span className="text-[10px] font-semibold">Chat</span>
+          <span className="text-[10px] mt-0.5">Riwayat</span>
         </button>
 
         <button
           onClick={() => onChangeTab('profil')}
-          className={`flex flex-col items-center gap-0.5 flex-1 ${
-            activeTab === 'profil' ? 'text-[#ff6200]' : 'text-gray-500 hover:text-gray-800'
+          className={`flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors cursor-pointer ${
+            activeTab === 'profil' ? 'text-[#ff6200] font-bold' : 'text-gray-500 hover:text-gray-800'
           }`}
         >
-          <span className="material-symbols-outlined text-[22px]">person_outline</span>
-          <span className="text-[10px] font-semibold">Profil</span>
+          <span className="material-symbols-outlined text-[24px]">account_circle</span>
+          <span className="text-[10px] mt-0.5">Profil</span>
         </button>
       </nav>
     </div>

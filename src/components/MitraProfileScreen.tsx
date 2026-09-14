@@ -294,7 +294,8 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
           <div className="flex flex-col gap-3.5">
             {filteredProjects.map(project => {
               const activeImg = activeImages[project.id] || project.mainImage;
-              const isContain = fitModes[project.id] === 'contain';
+              // Default to 'contain' (Foto Utuh) so photos are 100% visible and never cropped in half
+              const isContain = fitModes[project.id] !== 'cover';
 
               return (
                 <div
@@ -303,7 +304,7 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
                 >
                   {/* Image Container with Badges */}
                   <div
-                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] min-h-[220px] max-h-[280px] bg-slate-900 cursor-pointer group overflow-hidden select-none"
+                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] min-h-[220px] max-h-[300px] bg-slate-900 cursor-pointer group overflow-hidden select-none"
                     onClick={() => {
                       setPreviewModal({
                         url: activeImg,
@@ -313,11 +314,17 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
                       });
                     }}
                   >
+                    {/* Ambient Blurred Background to seamlessly fill margins without ugly black bars */}
+                    <div
+                      className="absolute inset-0 bg-cover bg-center filter blur-md opacity-30 scale-110 pointer-events-none"
+                      style={{ backgroundImage: `url(${activeImg})` }}
+                    />
+
                     <img
                       referrerPolicy="no-referrer"
                       src={activeImg}
                       alt={project.title}
-                      className={`w-full h-full transition-transform duration-300 ${
+                      className={`relative z-10 w-full h-full transition-transform duration-300 ${
                         isContain
                           ? 'object-contain p-2'
                           : 'object-cover object-center group-hover:scale-103'
@@ -330,10 +337,12 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
                         }
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/35 pointer-events-none"></div>
+                    {/* Subtle gradient vignette at top & bottom only */}
+                    <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10"></div>
+                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10"></div>
 
                     {/* Top Bar on Image */}
-                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none z-20">
                       <span className="px-2.5 py-1 bg-[#ff6200] text-white text-[10px] font-bold rounded-lg shadow-sm">
                         {project.categoryLabel}
                       </span>
@@ -346,11 +355,11 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
                             e.stopPropagation();
                             setFitModes(prev => ({
                               ...prev,
-                              [project.id]: prev[project.id] === 'contain' ? 'cover' : 'contain'
+                              [project.id]: prev[project.id] === 'cover' ? 'contain' : 'cover'
                             }));
                           }}
                           className="px-2.5 py-1 bg-black/65 hover:bg-black/85 backdrop-blur-xs text-white text-[10px] font-medium rounded-lg flex items-center gap-1 transition-colors border border-white/20"
-                          title="Ganti mode gambar antara Penuh (Cover) dan Foto Utuh (Contain)"
+                          title="Ganti mode gambar antara Foto Utuh (Contain) dan Zoom (Cover)"
                         >
                           <span className="material-symbols-outlined text-[13px]">
                             {isContain ? 'crop_free' : 'aspect_ratio'}
@@ -378,7 +387,7 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
                     </div>
 
                     {/* Bottom Info on Image */}
-                    <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-xs pointer-events-none">
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-xs pointer-events-none z-20">
                       <span className="font-semibold truncate drop-shadow-md max-w-[65%]">
                         {project.location}
                       </span>
@@ -449,6 +458,7 @@ export const MitraProfileScreen: React.FC<MitraProfileScreenProps> = ({
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   setActiveImages(prev => ({ ...prev, [project.id]: gal.image }));
+                                  setFitModes(prev => ({ ...prev, [project.id]: 'contain' }));
                                 }}
                                 className={`flex-1 h-14 rounded-lg overflow-hidden border relative cursor-pointer group transition-all text-left ${
                                   isSelected

@@ -62,19 +62,22 @@ export const FavoritesTab: React.FC<FavoritesTabProps> = ({ onSelectMitra, onExp
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] text-gray-400 block">Tarif Mulai</span>
-                  <span className="text-sm font-extrabold text-[#ff6200]">
+              <div className="pt-2 border-t border-gray-100 flex items-center justify-between gap-2">
+                <div className="min-w-0 shrink">
+                  <span className="text-[10px] text-gray-400 block leading-tight mb-0.5">Tarif Mulai</span>
+                  <span className="text-xs sm:text-sm font-extrabold text-[#ff6200] whitespace-nowrap leading-tight block">
                     Rp {mitra.priceDiscounted.toLocaleString('id-ID')}
+                  </span>
+                  <span className="text-[10px] font-semibold text-gray-500 whitespace-nowrap leading-none mt-0.5 block">
+                    / {mitra.priceUnit}
                   </span>
                 </div>
 
                 <button
                   onClick={() => onSelectMitra(id)}
-                  className="px-4 py-2 bg-[#ff6200] hover:bg-[#e05600] active:scale-95 text-white text-xs font-bold rounded-xl shadow-xs transition-all"
+                  className="px-3 sm:px-4 py-2 bg-[#ff6200] hover:bg-[#e05600] active:scale-95 text-white text-xs font-bold rounded-xl shadow-xs transition-all whitespace-nowrap shrink-0 cursor-pointer"
                 >
-                  Pesan & Lihat Portofolio
+                  <span className="whitespace-nowrap">Pesan & Lihat Portofolio</span>
                 </button>
               </div>
             </div>
